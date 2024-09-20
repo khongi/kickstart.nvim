@@ -639,6 +639,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        jdtls = {},
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -700,6 +701,22 @@ require('lazy').setup({
             }
             require('lspconfig').jdtls.setup {
               -- Custom nvim-java configuration
+              settings = {
+                java = {
+                  configuration = {
+                    runtimes = {
+                      {
+                        name = '21.0.4-tem',
+                        path = '/Users/khongor.bayarsaikhan/.sdkman/candidates/java/21.0.4-tem',
+                        default = true,
+                      },
+                    },
+                    jdk = {
+                      auto_install = false,
+                    },
+                  },
+                },
+              },
             }
           end,
         },
