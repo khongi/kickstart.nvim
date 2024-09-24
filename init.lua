@@ -87,6 +87,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
+-- Set default tabstop to 4, tpope/sleuth uses 8
+vim.opt.tabstop = 4
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
