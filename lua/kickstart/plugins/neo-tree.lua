@@ -82,6 +82,13 @@ return {
             local path = node:get_id()
             require('telescope.builtin').find_files(getTelescopeOpts(state, path))
           end,
+          ['ts'] = function(state)
+            local node = state.tree:get_node()
+            require('telescope.builtin').live_grep {
+              search_dirs = { node.absolute_path },
+              prompt_title = 'Live Grep in Selected Directory',
+            }
+          end,
         },
       },
       hijack_netrw_behavior = 'open_default',
