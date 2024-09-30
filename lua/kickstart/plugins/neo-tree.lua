@@ -52,6 +52,7 @@ return {
           ['tg'] = 'telescope_grep',
           ['T'] = 'trash',
           ['t'] = 'none',
+          ['B'] = 'show_buffers_right',
         },
       },
       commands = {
@@ -134,6 +135,9 @@ return {
             end
             require('neo-tree.sources.manager').refresh(state)
           end)
+        end,
+        show_buffers_right = function()
+          vim.api.nvim_exec2('Neotree focus buffers right', {})
         end,
       },
       hijack_netrw_behavior = 'open_default',
