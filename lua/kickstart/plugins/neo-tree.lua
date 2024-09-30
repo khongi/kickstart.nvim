@@ -51,6 +51,7 @@ return {
           ['tf'] = 'telescope_find',
           ['tg'] = 'telescope_grep',
           ['T'] = 'trash',
+          ['t'] = 'none',
         },
       },
       commands = {
