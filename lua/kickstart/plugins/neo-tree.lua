@@ -1,6 +1,30 @@
 -- Neo-tree is a Neovim plugin to browse the file system
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 
+-- Helper function for getting telescope options
+local function getTelescopeOpts(state, path)
+  return {
+    cwd = path,
+    search_dirs = { path },
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require 'telescope.actions'
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local action_state = require 'telescope.actions.state'
+        local selection = action_state.get_selected_entry()
+        local filename = selection.filename
+        if filename == nil then
+          filename = selection[1]
+        end
+        -- any way to open the file without triggering auto-close event of neo-tree?
+        ---@diagnostic disable-next-line: missing-parameter
+        require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
+      end)
+      return true
+    end,
+  }
+end
+
 return {
   'nvim-neo-tree/neo-tree.nvim',
   lazy = false,
@@ -24,8 +48,8 @@ return {
           ['\\'] = 'close_window',
           ['o'] = 'open_with_system',
           ['D'] = 'diff_two_files',
-          ['tf'] = 'find_files',
-          ['ts'] = 'search_in_files',
+          ['tf'] = 'telescope_find',
+          ['tg'] = 'telescope_grep',
           ['T'] = 'trash',
         },
       },
@@ -64,41 +88,16 @@ return {
             end
           end
         end,
-        find_files = function(state)
+        telescope_find = function(state)
           local node = state.tree:get_node()
           local path = node:get_id()
 
-          local function getTelescopeOpts(state, path)
-            return {
-              cwd = path,
-              search_dirs = { path },
-              attach_mappings = function(prompt_bufnr, map)
-                local actions = require 'telescope.actions'
-                actions.select_default:replace(function()
-                  actions.close(prompt_bufnr)
-                  local action_state = require 'telescope.actions.state'
-                  local selection = action_state.get_selected_entry()
-                  local filename = selection.filename
-                  if filename == nil then
-                    filename = selection[1]
-                  end
-                  -- any way to open the file without triggering auto-close event of neo-tree?
-                  ---@diagnostic disable-next-line: missing-parameter
-                  require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
-                end)
-                return true
-              end,
-            }
-          end
-
           require('telescope.builtin').find_files(getTelescopeOpts(state, path))
         end,
-        search_in_files = function(state)
+        telescope_grep = function(state)
           local node = state.tree:get_node()
-          require('telescope.builtin').live_grep {
-            search_dirs = { node.absolute_path },
-            prompt_title = 'Live Grep in Selected Directory',
-          }
+          local path = node:get_id()
+          require('telescope.builtin').live_grep(getTelescopeOpts(state, path))
         end,
         trash = function(state)
           local inputs = require 'neo-tree.ui.inputs'
