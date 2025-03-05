@@ -262,6 +262,15 @@ require('lazy').setup({
     },
   },
 
+  {
+    'arnarg/todotxt.nvim',
+    opts = {
+      todo_file = '~/todo.txt',
+    },
+    keys = {
+      { '<leader>t', '<cmd>ToDoTxtTasksToggle<cr>', desc = 'LazyGit' },
+    },
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
