@@ -271,6 +271,9 @@ require('lazy').setup({
       { '<leader>t', '<cmd>ToDoTxtTasksToggle<cr>', desc = 'LazyGit' },
     },
   },
+
+  { 'meznaric/key-analyzer.nvim', opts = {} },
+
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
