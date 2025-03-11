@@ -268,7 +268,7 @@ require('lazy').setup({
       todo_file = '~/todo.txt',
     },
     keys = {
-      { '<leader>t', '<cmd>ToDoTxtTasksToggle<cr>', desc = 'LazyGit' },
+      { '<leader>t', '<cmd>ToDoTxtTasksToggle<cr>', desc = 'Toggle ToDo Tasks' },
     },
   },
 
