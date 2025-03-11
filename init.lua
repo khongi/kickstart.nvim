@@ -866,6 +866,23 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'f-person/auto-dark-mode.nvim',
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      set_dark_mode = function()
+        vim.api.nvim_set_option_value('background', 'dark', {})
+      end,
+      set_light_mode = function()
+        vim.api.nvim_set_option_value('background', 'light', {})
+      end,
+      update_interval = 1000,
+      fallback = 'dark',
+    },
+  },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
@@ -877,7 +894,11 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      if vim.g.background == 'light' then
+        vim.cmd.colorscheme 'tokyonight-day'
+      else
+        vim.cmd.colorscheme 'tokyonight-night'
+      end
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
