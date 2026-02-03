@@ -516,6 +516,10 @@ require('lazy').setup({
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       { 'mason-org/mason.nvim', opts = {} },
+
+      -- This plugin streamlines Neovim's LSP setup by automating server installation and activation, providing helpful management commands, and mapping mason.nvim packages to nvim-lspconfig configurations.
+      { 'mason-org/mason-lspconfig.nvim', opts = {} },
+
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'nvim-java/nvim-java',
 
@@ -830,12 +834,8 @@ require('lazy').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
-      set_dark_mode = function()
-        vim.api.nvim_set_option_value('background', 'dark', {})
-      end,
-      set_light_mode = function()
-        vim.api.nvim_set_option_value('background', 'light', {})
-      end,
+      set_dark_mode = function() vim.api.nvim_set_option_value('background', 'dark', {}) end,
+      set_light_mode = function() vim.api.nvim_set_option_value('background', 'light', {}) end,
       update_interval = 1000,
       fallback = 'dark',
     },
